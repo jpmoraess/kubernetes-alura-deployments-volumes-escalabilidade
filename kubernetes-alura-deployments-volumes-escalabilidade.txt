@@ -1,0 +1,74 @@
+Kubernetes: Deployments, VOlumes e Escalabilidade
+
+Módulo 1 - Conhecendo ReplicaSets e Deployments
+
+Aula 04 - Conhecendo ReplicaSets
+
+    Criando o replicaSet para portal noticias, para isso, criar o arquivo portal-noticias-replicaset.yml contendo:
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: portal-noticias-replicaset
+spec:
+  template:
+    metadata:
+      name: portal-noticias
+      labels:
+        app: portal-noticias
+    spec:
+      containers:
+        - name: portal-noticias-container
+          image: aluracursos/portal-noticias:1
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: portal-configmap
+  replicas: 3
+  selector:
+    matchLabels:
+      app: portal-noticias
+
+  
+  Rodar o comando kubectl get replicasets para visualizar informações.
+
+
+Aula 6 - Conhecendo Deployments
+
+Criar o arquivo nginx-deployment.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-pod
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:stable
+          ports:
+            - containerPort: 80
+  selector:
+    matchLabels:
+      app: nginx-pod
+
+
+Rodar o comando: kubectl get deployments para ver informações dos deployments
+
+
+Rodar o comando: kubectl rollout history deployment nginx-deployment
+
+
+Rodar o comando: kubectl rollout undo deployment nginx-deployment --to-revision=2
+
+
+
+Aula 8 - Aplicando  Deployments ao projeto
+
