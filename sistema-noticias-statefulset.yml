@@ -29,7 +29,14 @@ spec:
               port: 80
             periodSeconds: 10
             failureThreshold: 3
-            initialDelaySeconds: 25         
+            initialDelaySeconds: 25  
+          readinessProbe:
+            httpGet:
+              path: /inserir_noticias.php
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 10
+            initialDelaySeconds: 25           
       volumes:
         - name: imagens
           persistentVolumeClaim:
