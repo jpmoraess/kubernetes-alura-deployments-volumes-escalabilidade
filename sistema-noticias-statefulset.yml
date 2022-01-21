@@ -22,7 +22,14 @@ spec:
             - name: imagens
               mountPath: /var/www/html/uploads
             - name: sessao
-              mountPath: /tmp      
+              mountPath: /tmp   
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 25         
       volumes:
         - name: imagens
           persistentVolumeClaim:
